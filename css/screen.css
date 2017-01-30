@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media screen and (max-width:1100px){
+
+
+.wish_counter{ left:50%;}
+.wrapper{ width:98%;}
+.tag1, .tag2, .tag3{ width:50%; font-size:20px;}
+.tag1{ margin:14% 0 0 4%; font-size:20px;}
+.tag2{ margin-left:4%;}
+.tag3{ margin-left:4%; width:80%;}
+.wishes{ width:98%;}
+.new img{ width:200px;}
+.blog1{ margin-left:2%;}
+
+}
+@media screen and (max-width:1023px){
+.blog1 li{ display:inline-block; width:29%; text-align:left;}
+.blog1{ margin-left:6%;}
+}
+
+@media screen and (max-width:979px){
+	
+.new img{ width:100px;}	
+.timing_box{ height:auto;}
+.left_wishes{ background:none; padding:10% 10%; width:100%; text-align:center; margin:0; height: auto;}
+.wish_counter{ position:static; float:left; width:100%; border:0;}
+.tag1, .tag2, .tag3{ margin:10px 0; float:left; width:100%;}
+.scroll img{ width:50px;}	
+.mob_banner{ display:block; width:100%;} 
+.banner{ display:none;}
+.scroll{ display:none;}
+.blog1{ margin-left:2%;}
+	
+}
+
+
+@media screen and (max-width:767px){
+
+.logo img{ width:100px;}	
+.wish_counter img{ width:50%;}
+.blog1{ float:left; width:100%; margin-right:0;}
+.footerSection .copySec{ float:left; width:100%; text-align:center;}
+.footerSection .social{ float:left; width:100%; text-align:center;}
+.footerSection .social a{ display:inline-block; vertical-align:top;}
+.new img{ width:85px;}
+
+	.tribe p {
+    background:#fff;
+    border-radius: 10px;
+    font-size: 12px;
+    padding: 5px;
+     
+}
+
+.tribe{top:35%;}
+
+.blog1{ margin-left:0%;}
+.blog1 li{ display:inline-block; float:left; width:100%; text-align:left;}
+
+}
+
+@media screen and (max-width:599px){
+.form_box{ width:100%; padding:20px 2%;}	
+.blog1 li{width: 100%; margin: 20px 0;}
+#userData .modal-title, #tributeData .modal-title, #socialShare .modal-title{font-size: 18px;}
+.counts{ padding:24px 15px; font-size:40px;}
+}
+	
+}
+
+
+@media screen and (max-width:375px){
+.form_box{ width:300px; padding:10px 1%;}	
+	
+}
+
+@media only screen and (max-width: 1023px) {
+.banner_mobile{
+    display: block;
+    max-width: 100%;
+}
+}
