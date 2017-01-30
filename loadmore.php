@@ -3,7 +3,7 @@
     if (isset($_POST['page'])):
         $paged = $_POST['page'];
         $siteUrl = $_POST['siteUrl'];
-        $sql = "SELECT * FROM `user_data` Where deleted=0 order by id desc limit $paged, 5 ";
+        $sql = "SELECT * FROM `user_data` Where deleted=0 order by id desc limit $paged, 20 ";
         $result = $conn->query($sql); 
        
         $num_rows = $result->num_rows;

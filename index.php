@@ -120,7 +120,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 /*
                  *  Listing
                  */
-                $sqlSelect = "SELECT name, document_type, message, image FROM user_data where status=1 And deleted=0 order by id desc limit 5";
+                $sqlSelect = "SELECT name, document_type, message, image FROM user_data where status=1 And deleted=0 order by id desc limit 20";
                 $result = $conn->query($sqlSelect); 
                  
                 if ($result->num_rows > 0) {
@@ -157,7 +157,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 </li> 
             <?php } } ?>
         </ul>
-        <input type="hidden" id="result_no" value="5">
+        <input type="hidden" id="result_no" value="20">
         <li class="loadbutton">
             <button class="loadmore" >Load More</button>
         </li>
@@ -609,7 +609,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
             success: function (response) {
                 if (response != 0) {
                     $(".news_list").append(response);
-                    document.getElementById("result_no").value = Number($('#result_no').val()) + 5;
+                    document.getElementById("result_no").value = Number($('#result_no').val()) + 20;
                     $('.loadmore').text('Load More');
                 } else {
                     $('.loadmore').hide();
