@@ -58,12 +58,12 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
         <img src="<?php echo siteUrl; ?>/images/new.png" alt="">
     </div>
 
-    <div class="tribe" id="yourTributeDiv">
+    <!-- <div class="tribe" id="yourTributeDiv">
         <a href="javascript:void(0);" class="" data-toggle="modal" data-target="#userData">
-            <img src="<?php echo siteUrl; ?>/images/tribe.png" alt="" />
+            <img src="<?php //echo siteUrl; ?>/images/tribe.png" alt="" />
             <p>Share Wishes for Soldiers</p>
         </a>
-    </div>
+    </div> -->
     
     <div class="scroll">
         <a href="javascript:void(0);" onclick="$('#section-2').animatescroll();">
@@ -98,7 +98,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
   <div class="wrapper">
     <div class="blogs">
       <div class="blog1">
-        <ul id="container" class="clearfix fluid">
+        <ul id="container" class="clearfix fluid news_list">
             <?php
                 /*
                  *  Website Count
@@ -120,13 +120,14 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 /*
                  *  Listing
                  */
-                $sqlSelect = "SELECT name, document_type, message, image FROM user_data where status=1 And deleted=0 order by id desc limit 10";
+                $sqlSelect = "SELECT name, document_type, message, image FROM user_data where status=1 And deleted=0 order by id desc limit 5";
                 $result = $conn->query($sqlSelect); 
                  
                 if ($result->num_rows > 0) {
                     foreach($result as $rs) {
+                        $postID = $rs["id"];
             ?>
-                <li>
+                <li id="main_<?php echo $postID; ?>">
                     <div class="main doc">
                         <div class="queto"> 
                             <img src="<?php echo siteUrl; ?>/images/top_qeto.png" alt="<?php echo $rs['name']; ?>" />
@@ -156,6 +157,10 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 </li> 
             <?php } } ?>
         </ul>
+        <input type="hidden" id="result_no" value="5">
+        <li class="loadbutton">
+            <button class="loadmore" >Load More</button>
+        </li>
       </div>  
     </div>
   </div>
@@ -590,6 +595,28 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
     }
 
     $('.wish_counter').html(wishes);
+
+    $(document).on('click', '.loadmore', function () {
+        $(this).text('Loading...');
+        var ele = $(this).parent('li');
+        $.ajax({
+            url: 'loadmore.php',
+            type: 'POST',
+            data: {
+                page: $('#result_no').val(),
+                siteUrl: '<?php echo siteUrl; ?>'
+            },
+            success: function (response) {
+                if (response != 0) {
+                    $(".news_list").append(response);
+                    document.getElementById("result_no").value = Number($('#result_no').val()) + 5;
+                    $('.loadmore').text('Load More');
+                } else {
+                    $('.loadmore').hide();
+                }
+            }
+        });
+    });
     
     
 </script>   

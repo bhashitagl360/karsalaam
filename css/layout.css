@@ -295,6 +295,20 @@ ul#container li {
 .wish_counter{padding-left: 0px !important;}
 
 
+.loadmore {
+color: #FFF;
+border-radius: 5px;
+width: auto; 
+
+font-size: 20px;
+background: #42B8DD;
+outline: 0; padding: 10px 30px; display: inline-block;
+}
+ .loadbutton{
+    text-align: center!important; float:left!important; width:90% !important; margin: 20px 0!important;
+}
+
+
 
 @media only screen and (min-width: 1023px) {
     .banner_mobile {

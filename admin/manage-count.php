@@ -1,11 +1,13 @@
 <?php 
     require_once 'include/header.php';
 
-    if( isset($role) && $role == 2) {
+    $role = $_SESSION['role'];
+
+    if( $role == 2) {
         $redirectURL = siteUrl.'/admin/dashboard.php';
         echo "<meta http-equiv='refresh' content='0;url=$redirectURL'>";
         exit;
-    }
+    } 
 
     $countValue = '';
     $check = '';
