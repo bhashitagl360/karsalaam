@@ -103,7 +103,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 /*
                  *  Website Count
                  */
-                $sqlWCount = "SELECT count(*) as tcount FROM user_data";
+                $sqlWCount = "SELECT count(*) as tcount FROM user_all_data";
                 $resultWCount = $conn->query($sqlWCount); 
                 
                 $rowWebCount = mysqli_fetch_array($resultWCount, MYSQLI_ASSOC);
@@ -120,7 +120,7 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 /*
                  *  Listing
                  */
-                $sqlSelect = "SELECT name, document_type, message, image FROM user_data where status=1 And deleted=0 order by id desc limit 20";
+                $sqlSelect = "SELECT displayName, documents_type, document_message, document FROM user_all_data where status=1 AND deleted=0 order by id desc limit 20";
                 $result = $conn->query($sqlSelect); 
                  
                 if ($result->num_rows > 0) {
@@ -130,28 +130,40 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
                 <li id="main_<?php echo $postID; ?>">
                     <div class="main doc">
                         <div class="queto"> 
-                            <img src="<?php echo siteUrl; ?>/images/top_qeto.png" alt="<?php echo $rs['name']; ?>" />
+                            <img src="<?php echo siteUrl; ?>/images/top_qeto.png" alt="<?php echo $rs['displayName']; ?>" />
                         </div>
 
                         <div class="right_icon">
-                            <?php if($rs['document_type'] == 'text') { ?>
-                               <img src="<?php echo siteUrl; ?>/images/doc.png" alt="<?php echo $rs['name']; ?>" />
-                            <?php } else if($rs['document_type'] == 'image') { ?>
-                               <img src="<?php echo siteUrl; ?>/images/img_icon.png" alt="<?php echo $rs['name']; ?>" />
-                            <?php } ?> 
+                            <?php if($rs['documents_type'] == 'text') { ?>
+                               <img src="<?php echo siteUrl; ?>/images/doc.png" alt="<?php echo $rs['displayName']; ?>" />
+                            <?php } else if($rs['documents_type'] == 'image') { ?>
+                               <img src="<?php echo siteUrl; ?>/images/img_icon.png" alt="<?php echo $rs['displayName']; ?>" />
+                            <?php } else if($rs['documents_type'] == 'video') { ?> 
+                                <img src="<?php echo siteUrl; ?>/images/video_icon.png" alt="<?php echo $rs['displayName']; ?>" />
+                            <?php } ?>
                         </div>
                         <div class="name">
-                            <?php echo $rs['name']; ?>
+                            <?php echo $rs['displayName']; ?>
                         </div>
                         <div class="tag">
                             #KarSalaam
                         </div>
-                        <?php if($rs['document_type'] == 'image') { ?>
-                        <div class="video_box">  
-                            <img src="<?php echo siteUrl.'/documents/image/'.$rs['image']; ?>" alt="<?php echo $rs['name']; ?>" /> 	
-	              	</div>
+                        
+                        
+                        <?php if($rs['documents_type'] == 'image') { ?>
+                            <div class="video_box">  
+                                <img src="https://imagedata-test.s3.amazonaws.com/message/images/<?php echo $rs['document']; ?>" alt="<?php echo $rs['displayName']; ?>" /> 
+                            </div>
+                        <?php } else if($rs['documents_type'] == 'video') { ?>
+                            <div class="video_box">  
+                                <video width="320" height="240" controls>
+                                    <source src="https://imagedata-test.s3.amazonaws.com/message/video/<?php echo $rs['document']; ?>" type="video/mp4">
+                                    <source src="https://imagedata-test.s3.amazonaws.com/message/video/<?php echo $rs['document']; ?>" type="video/ogg">
+                                  Your browser does not support the video tag.
+                                </video>
+                            </div>
                         <?php } ?>
-                        <p><?php echo $rs['message']; ?></p>
+                        <p><?php echo $rs['document_message']; ?></p>
                         <a href="#" class="read">Read + </a> 
                     </div>
                 </li> 
@@ -176,133 +188,6 @@ src="https://www.facebook.com/tr?id=764816483610203&ev=PageView&noscript=1"
     </div>
   </div>
 </footer>
-    
-    <!-- Modal User Data-->
-	<div class="modal fade" id="userData" role="dialog">
-	    <div class="modal-dialog">
-		    <!-- Modal content-->
-		    <div class="modal-content form_box">
-		        <div class="modal-header">
-		          	<button type="button" class="close" data-dismiss="modal">
-		          		<img src="<?php echo siteUrl; ?>/images/close2.png" alt="Close" />
-		          	</button>
-		          	<h4 class="modal-title">Share Wishes for Soldiers</h4>
-		        </div>
-		        <div class="modal-body">
-		        	<p id="errorMsg" class="errMsg"></p>
-		          	<ul>
-					    <li>
-					        <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Your Name" required />
-					    </li>
-					    <li>
-					        <input type="text" name="email" id="email" class="form-control" placeholder="Email Address" required />
-					    </li>
-					    <li>
-					        <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile Number" required />
-					    </li>
-					    <li id="agree_li">
-					        <input type="checkbox" name="agree" id="agree" value="1" class="form-control" />
-					        <div class="sinupline">
-					        	<a href="<?php echo siteUrl; ?>/disclaimer.html" class="linka disc" target="_blank">
-					        	Disclaimer
-					       		</a>
-					       	</div>
-					    </li>
-<!--					    <li class="white_color">
-					    	OR (Login with)
-					    </li>
-					    <li>
-					        <div class="social"> 
-					        <a href="/api/auth/facebook">
-					        	<i class="fa fa-facebook"></i>
-					        </a>
-					        <a href="/api/auth/twitter">
-					        	<i class="fa fa-twitter"></i>
-					        </a>
-					        <a href="/api/auth/google">
-					        	<i class="fa fa-google-plus"></i>
-					        </a>
-					        </div>
-					    </li>-->
-					    <li>
-					        <a href="javascript:void(0);" class="form_box_poup" style="position:relative;">
-                                <input type="hidden" name="role" id="role" value="user" />
-					        	<input type="submit" value="Submit" id="addUserDetails" />
-					        </a>
-					    </li>
-				    </ul>
-		        </div>
-		        <div class="modal-footer">
-		          	<button style="display:none;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        </div>
-		    </div>
-	    </div>
-	</div>
-
-	<!-- Modal Tribute Data-->
-	<div class="modal fade" id="tributeData" role="dialog">
-	    <div class="modal-dialog">
-		    <!-- Modal content-->
-		    <div class="modal-content form_box">
-		        <div class="modal-header">
-		          	<button type="button" class="close" data-dismiss="modal">
-		          		<img src="<?php echo siteUrl; ?>/images/close2.png" alt="Close" />
-		          	</button>
-		          	<h4 class="modal-title">Share Wishes for Soldiers</h4>
-		        </div>
-		        <div class="modal-body">
-		        	<p id="errorTributeMsg" class="errMsg"></p>
-				    <ul>
-					    <li>
-					        <input type="radio" id="message_input" checked="checked" name="document_type" onclick="check_type(this.value)" value="text" />
-					        <label>Text</label>
-					        <input type="radio" name="document_type" onclick="check_type(this.value)" value="image" />
-					        <label>Image</label>
-<!--					        <input type="radio" name="document_type" onclick="check_type(this.value)" value="video" />
-					        <label>Video</label>-->
-					    </li>
-					    <li id="text_li">
-					        <textarea name="message" id="message"></textarea>
-					    </li>
-					    <li id="image_li" style="display:none; position: relative;">
-					    	<label class="UpPic">
-	                         	<p>
-                                            <input type="file" qq-button-id="a3f1c7eb-9365-40ce-8650-c5dddd4beef9" accept="image/*" name="pic" style="position: absolute; right: 0px; top: 0px; font-family: Arial; font-size: 118px; margin: 0px; padding: 0px; cursor: pointer; opacity: 0; float: right; width: 40%" id="uploader" />
-                                            <img id="image_preview" src="<?php echo siteUrl; ?>/images/default_img.jpg" alt="Preview Image" >
-	                         	</p>
-	                        </label>
-	                        <p class="lead_txt">
-	                        	* Please upload a png or jpg image file and upto 1 mb size.
-	                        </p>
-					    </li>
-
-<!--					    <li id="video_li" style="display:none; position: relative;">
-					    	<label class="UpVideo">
-	                         	<p>
-	                         		<input style="display: none;" type="file" name="video" id="video" />
-	                         		<img id="video_preview" src="<?php //echo siteUrl; ?>/images/default_img.jpg" alt="Preview Image" />
-	                         	</p>
-	                        </label> 
-	                        <p class="lead_txt">
-	                        	* Please upload a mp4 video file and upto 10 mb size.
-	                        </p>
-					    </li>-->
-					    <li>
-					        <a href="javascript:void(0);" class="form_box_poup" style="position:relative;">
-					        	<input type="submit" value="Submit" id="yourTribute" />
-					        </a>
-					    </li>
-				    </ul> 
-		        </div>
-		        <div class="modal-footer">
-		          	<button style="display:none;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        </div>
-		    </div>
-	    </div>
-	</div>
-        
-<input type="hidden" name="image_hidden" image_path="" image_msg="" id="image_hidden" />        
-<input type="hidden" name="user_id" id="user_id" value="<?php echo $_SESSION['user_id'] ?>" />
 
 <script type="text/javascript" src="<?php echo siteUrl; ?>/js/html5.js"></script>
 <script src="<?php echo siteUrl; ?>/js/animatescroll.js"></script>  

@@ -23,7 +23,7 @@
                         <div class="blog1">
                             <ul id="container" class="news_list">
                                 <?php
-                                $sqlSelect = "SELECT id,name, document_type,message,status,image FROM user_data where deleted=0 order by id desc limit 10";
+                                $sqlSelect = "SELECT id,displayName, documents_type,document_message,status,document FROM user_all_data where deleted=0 order by id desc limit 10";
                                 $result = $conn->query($sqlSelect);
                                 if ($result->num_rows > 0) {
                                     foreach ($result as $rs) {
@@ -36,7 +36,7 @@
                                             <div class="main doc">
 
                                                 <div class="queto"> 
-                                                    <img src="<?php echo siteUrl; ?>/images/top_qeto.png" alt="<?php echo $rs['name']; ?>" />
+                                                    <img src="<?php echo siteUrl; ?>/images/top_qeto.png" alt="<?php echo $rs['displayName']; ?>" />
                                                 </div>
 
                                                 <div class="right_icon">
@@ -46,24 +46,34 @@
                                                     <a href="javascript:void(0);" <?php echo ($status == 1) ? '' : "style='display:none'" ?> class="icon-btn" title="Inactive" id="inactive_<?php echo $postID; ?>" onclick="inactiveMessage('<?php echo $postID; ?>');"><i class="fa fa-close"></i></a>
                                                     <a href="javascript:void(0);" <?php echo ($status == 0) ? '' : "style='display:none'" ?> class="icon-btn" title="Active" id="active_<?php echo $postID; ?>" onclick="activeMessage('<?php echo $postID; ?>');"><i class="fa fa-check"></i></a>
 
-                                                    <?php if ($rs['document_type'] == 'text') { ?>
-                                                        <img src="<?php echo siteUrl; ?>/images/doc.png" alt="<?php echo $rs['name']; ?>" />
-                                                    <?php } else if ($rs['document_type'] == 'image') { ?>
-                                                        <img src="<?php echo siteUrl; ?>/images/img_icon.png" alt="<?php echo $rs['name']; ?>" />
+                                                    <?php if ($rs['documents_type'] == 'text') { ?>
+                                                        <img src="<?php echo siteUrl; ?>/images/doc.png" alt="<?php echo $rs['displayName']; ?>" />
+                                                    <?php } else if ($rs['documents_type'] == 'image') { ?>
+                                                        <img src="<?php echo siteUrl; ?>/images/img_icon.png" alt="<?php echo $rs['displayName']; ?>" />
+                                                    <?php } else if ($rs['documents_type'] == 'video') { ?>
+                                                        <img src="<?php echo siteUrl; ?>/images/video_icon.png" alt="<?php echo $rs['displayName']; ?>" />
                                                     <?php } ?> 
                                                 </div>
                                                 <div class="name">
-                                                    <?php echo $rs['name']; ?>
+                                                    <?php echo $rs['displayName']; ?>
                                                 </div>
                                                 <div class="tag">
                                                     #KarSallam
                                                 </div>
-                                                <?php if ($rs['document_type'] == 'image') { ?>
+                                                <?php if ($rs['documents_type'] == 'image') { ?>
                                                     <div class="video_box">  
-                                                        <img src="<?php echo siteUrl . '/documents/image/' . $rs['image']; ?>" alt="<?php echo $rs['name']; ?>" /> 	
+                                                        <img src="<?php echo 'https://imagedata-test.s3.amazonaws.com/message/images/' . $rs['document']; ?>" alt="<?php echo $rs['displayName']; ?>" /> 	
+                                                    </div>
+                                                <?php } else if($rs['documents_type'] == 'video') { ?>
+                                                    <div class="video_box">  
+                                                        <video width="320" height="240" controls>
+                                                            <source src="https://imagedata-test.s3.amazonaws.com/message/video/<?php echo $rs['document']; ?>" type="video/mp4">
+                                                            <source src="https://imagedata-test.s3.amazonaws.com/message/video/<?php echo $rs['document']; ?>" type="video/ogg">
+                                                          Your browser does not support the video tag.
+                                                        </video>
                                                     </div>
                                                 <?php } ?>
-                                                <p><?php echo $rs['message']; ?></p>
+                                                <p><?php echo $rs['document_message']; ?></p>
 
                                             </div>
                                         </li> 

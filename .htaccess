@@ -1,3 +1,0 @@
-RewriteEngine On
-RewriteCond %{HTTP_HOST} ^karsalaam.in [nocase]
-RewriteRule ^(.*) http://www.karsalaam.in/$1 [last,redirect=301]
